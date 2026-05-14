@@ -4,7 +4,7 @@
 <img width="595" height="423" alt="image" src="https://github.com/user-attachments/assets/c2dbe82d-0027-475d-8940-53c8d0f77f07" />
 
 <h3>Download</h3>
-https://github.com/GullDSP/Phathom/releases
+https://github.com/GullDSP/Phathom-VST/releases
 <h3>Demo</h3>
 <a href="https://www.youtube.com/watch?v=Skig5GgicCw">
   <img src="https://markdown-videos-api.jorgenkh.no/url?url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DSkig5GgicCw" alt="Phathom Demo" title="Phathom Demo"/>
