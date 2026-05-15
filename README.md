@@ -1,7 +1,8 @@
 <h1><strong>Phathom</strong></h1>
 <p>Phathom is a bass preamp plugin targeted towards modern fuzzy / growly bass guitar tones. Featuring an dynamic transformer-like saturation algorithm, and pre-distortion bass and treble filters to change how it reacts to picking dynamics and input timbre. </p>
 
-<img width="595" height="423" alt="image" src="https://github.com/user-attachments/assets/c2dbe82d-0027-475d-8940-53c8d0f77f07" />
+<img width="596" height="427" alt="phahtom_image" src="https://github.com/user-attachments/assets/19c7f8f0-b0be-401e-b287-4db297157f64" />
+
 
 <h3>Download</h3>
 https://github.com/GullDSP/Phathom-VST/releases
