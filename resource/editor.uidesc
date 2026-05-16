@@ -140,6 +140,7 @@
 			"Mix": "103",
 			"OutputLevel": "109",
 			"Phase": "111",
+			"Response": "112",
 			"UIInLvl": "107",
 			"UIOutLvl": "108"
 		},
@@ -170,7 +171,7 @@
 			},
 			"UIAttributesController": {},
 			"UIViewCreatorDataSource": {
-				"SelectedRow": "3"
+				"SelectedRow": "4"
 			},
 			"UIColorsDataSource": {
 				"SelectedRow": "7"
@@ -492,7 +493,7 @@
 							"text-inset": "0, 0",
 							"text-rotation": "0",
 							"text-shadow-offset": "1, 1",
-							"title": "v1.0.5",
+							"title": "v1.0.6",
 							"transparent": "false",
 							"uidesc-label": "Title",
 							"value-precision": "2",

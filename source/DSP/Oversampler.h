@@ -104,6 +104,9 @@ public:
 	void setDrive(float value) {
 		Nonlinearity.setDrive(value);
 	}
+	void setResponse(float value) {
+		Nonlinearity.setResponse(value);
+	}
 	
 	void getBlockOversampled(float* Buffer, int num_samples) {
 

@@ -77,6 +77,8 @@ inline std::vector<Steinberg::Vst::Parameter*> registerParameters(Steinberg::Vst
 	pPhaseSwitch->setNormalized(0);
 	myParams.push_back(pPhaseSwitch);
 
+	//myParams.push_back(new Steinberg::Vst::Parameter(STR16("Response"), kResponse, STR16(""), 0.5, 0, Steinberg::Vst::ParameterInfo::kNoFlags));
+
 
 	myParams.push_back(new Steinberg::Vst::Parameter(STR16("UIInLvl"), kUIInAmp, STR16(""), 0.0, 0, flagsUIParams));
 	myParams.push_back(new Steinberg::Vst::Parameter(STR16("UIOutLvl"), kUIOutAmp, STR16(""), 0.0, 0, flagsUIParams));

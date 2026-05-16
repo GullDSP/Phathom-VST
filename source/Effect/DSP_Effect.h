@@ -278,6 +278,7 @@ public:
 			}
 			
 		}
+
 	}
 	/// <summary>
 	/// Reset LFO phases, and collapse smoothers
@@ -323,11 +324,14 @@ private:
 	ValueSmoother OutGainSmoother;
 	ValueSmoother MixSmoother;
 
+
+
 	float mInGain = 0.714;
 	float mOutGain = 0.714;
 	float mMix = 0.5;
 	bool mDoDryEq = false;
 	bool mInvertPhase = false;
+
 
 	HiFreqSelectorValues mHiCut = HiFreqSelectorValues::kHiNormal;
 	LoFreqSelectorValues mLoCut = LoFreqSelectorValues::kLoNormal;
