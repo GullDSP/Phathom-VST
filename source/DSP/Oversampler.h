@@ -86,8 +86,11 @@ public:
 		UpsampledBuffer.assign(currentBlockSize, 0.0);
 
 	}
-	void reset() {
-		
+	void prepareToPlay() {
+		Nonlinearity.prepareToPlay();
+		resetDSP();
+	}
+	void resetDSP() {
 		ReconstructionLPA.reset();
 		InterpolationLPA.reset();
 		ReconstructionLPB.reset();
@@ -96,6 +99,9 @@ public:
 		InterpolationLPC.reset();
 		ReconstructionLPD.reset();
 		InterpolationLPD.reset();
+	}
+	void reset() {
+		resetDSP();
 		Nonlinearity.reset();
 	}
 	void collapseSmoothers() {

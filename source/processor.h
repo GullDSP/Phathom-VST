@@ -55,6 +55,16 @@ public:
 		return maxTailSeconds * sampleRateForTail;
 	}
 
+	Steinberg::tresult PLUGIN_API setProcessing(Steinberg::TBool state /*in*/) override {
+		// Reset effects before playback
+		if (state) {
+			EffectL.prepareToPlay();
+			EffectR.prepareToPlay();
+		}
+
+		return AudioEffect::setProcessing(state);
+	}
+
 //------------------------------------------------------------------------
 protected:
 	AudioEffectModule EffectL;

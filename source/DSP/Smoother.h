@@ -41,6 +41,10 @@ public:
 	void collapse() {
 		lastValue = currentTarget;
 	}
+	void collapseTo(double target) {
+		lastValue = target;
+		currentTarget = target;
+	}
 
 private:
 	double lastValue = 0;

@@ -39,10 +39,18 @@ public:
 		feedback_amount_ = expf(-1.0f / (sampleRate * target_t));
 
 	}
+	void prepareToPlay() {
+		collapseSmoothers();
+		resetDSP();
+	}
 	void reset() {
+		DriveSmoother.reset();
+		resetDSP();
+	}
+
+	void resetDSP() {
 		DC.resetState();
 		DirDC.resetState();
-		DriveSmoother.reset();
 		MorphLP.resetState();
 		last_out_ = 0;
 		last_in_ = 0;
@@ -50,7 +58,7 @@ public:
 		morph_state_ = 0;
 	}
 	void collapseSmoothers() {
-		DriveSmoother.collapse();
+		DriveSmoother.collapseTo(mDrive);
 	}
 	void setDrive(float value) {
 		mDrive = value;

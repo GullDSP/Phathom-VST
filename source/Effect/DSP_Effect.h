@@ -48,7 +48,6 @@ public:
 
 		InGainSmoother.setSmoothTime(50, sample_rate);
 		OutGainSmoother.setSmoothTime(50, sample_rate);
-
 		MixSmoother.setSmoothTime(50, sample_rate);
 		
 		HiCtrlLP.setSampleRate(sample_rate);
@@ -76,6 +75,7 @@ public:
 
 	void onPresetLoaded() {
 		updateParameters();
+		resetDSP();
 		collapseSmoothers();
 	}
 
@@ -86,9 +86,7 @@ public:
 	}
 	void processBlock(float* outL, float* inL, int num_samples) {
 		DenormalHandler AntiDenormal;
-
 		updateParameters();
-		collapseSmoothers();
 		if (mIsBypass) {
 			// if bypassed and we have buffers that are not the same location, copy them
 			if (inL && outL && inL != outL) {
@@ -289,6 +287,19 @@ public:
 		OutGainSmoother.reset();
 		MixSmoother.reset();
 
+		resetDSP();
+	}
+	/// <summary>
+	/// Reset DSP and set smoothers to last known 
+	/// Call before bouncing etc to prevent drifting parameters
+	/// or stale states
+	/// </summary>
+	void prepareToPlay() {
+		collapseSmoothers();
+		resetDSP();
+	}
+
+	void resetDSP() {
 		HiCtrlLP.resetState();
 		HiCtrlHP.resetState();
 		PreDriveStaticLP.resetState();
@@ -299,14 +310,14 @@ public:
 		PostNotch.reset();
 		PostLP.reset();
 		PostLP2.reset();
-		Nonlinearity.reset();
+		Nonlinearity.prepareToPlay();
 		DecimationFilter.resetState();
 	}
 
 	void collapseSmoothers() {
-		InGainSmoother.collapse();
-		OutGainSmoother.collapse();
-		MixSmoother.collapse();
+		InGainSmoother.collapseTo(mInGain);
+		OutGainSmoother.collapseTo(mOutGain);
+		MixSmoother.collapseTo(mMix);
 
 	}
 
