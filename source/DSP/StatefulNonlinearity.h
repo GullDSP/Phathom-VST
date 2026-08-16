@@ -153,14 +153,11 @@ public:
 		sample_rate_ = sample_rate;
 		LP1.setSampleRate(sample_rate);
 		LP2.setSampleRate(sample_rate);
-		LP3.setSampleRate(sample_rate);
 		LP1.setCenterHz(5000);
 		LP2.setCenterHz(5000);
-		LP3.setCenterHz(5000);
 		DC.setSampleRate(sample_rate);
 		DC.setCenterHz(10);
 		DriveSmoother.setSmoothTime(55, sample_rate);
-		setDrive(0.5);
 
 		rate_scale = 48000.0f / (float)sample_rate_;
 		if (rate_scale < 0.2) { rate_scale = 0.2f; }
@@ -168,6 +165,10 @@ public:
 	void setDrive(float value) {
 		mA = 0.15f - (value * 0.14f);
 
+	}
+	void prepareToPlay() {
+		collapseSmoother();
+		resetDSP();
 	}
 	void getBlock(float* out, float* in, int num_samples) {
 		for (int i = 0; i < num_samples; i++) {
@@ -188,19 +189,20 @@ public:
 		d = LP1.getNext(d);
 		d = LP2.getNext(d); // smooth out the delta a bit
 		float spl = lang(in + (mK * d * 5000.0f), mA_now);
-		spl = LP3.getNext(spl);
 		ZX = in;
 
 		spl = DC.getNext(spl);
 		return spl * 0.25f;
 	}
-	void reset() {
+	void resetDSP() {
 		LP1.resetState();
 		LP2.resetState();
-		LP3.resetState();
 		ZX = 0.0f;
 		DC.resetState();
-
+	}
+	void reset() {
+		DriveSmoother.reset();
+		resetDSP();
 	}
 
 	void collapseSmoother() {
@@ -211,8 +213,8 @@ private:
 	float ZX = 0;
 	float rate_scale = 1.0f; // Scale the 'width' based on sample rate to keep it roughly consistent
 	float mK = 1;
-	float mA = 1;
-	OnePoleLowpass LP1, LP2, LP3;
+	float mA = 0.15f - (0.5f * 0.14f);
+	OnePoleLowpass LP1, LP2;
 	OnePoleHighpass DC;
 	ValueSmoother DriveSmoother;
 };

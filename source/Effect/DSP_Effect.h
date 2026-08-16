@@ -319,9 +319,9 @@ public:
 	}
 
 	void collapseSmoothers() {
-		InGainSmoother.collapseTo(mInGain);
-		OutGainSmoother.collapseTo(mOutGain);
-		MixSmoother.collapseTo(mMix);
+		InGainSmoother.collapse();
+		OutGainSmoother.collapse();
+		MixSmoother.collapse();
 
 	}
 

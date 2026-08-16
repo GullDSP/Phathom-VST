@@ -64,7 +64,7 @@ public:
 		}
 
 		Nonlinearity.setSampleRate(currentSampleRate, currentBlockSize);
-		HystLoop.setSampleRate(sample_rate);
+		HystLoop.setSampleRate(currentSampleRate);
 		ReconstructionLPA.setSampleRate(currentSampleRate);
 		InterpolationLPA.setSampleRate(currentSampleRate);
 		ReconstructionLPB.setSampleRate(currentSampleRate);
@@ -90,6 +90,7 @@ public:
 	}
 	void prepareToPlay() {
 		Nonlinearity.prepareToPlay();
+		HystLoop.prepareToPlay();
 		resetDSP();
 	}
 	void resetDSP() {
@@ -136,7 +137,13 @@ public:
 
 		if (!b_will_oversample_) {
 			// If we don't need to oversample call the non oversampling block
-			Nonlinearity.getBlock(Buffer, num_samples);
+			if (!mUseHysLoop) {
+				Nonlinearity.getBlock(Buffer, num_samples);
+			}
+			else {
+				HystLoop.getBlock(Buffer, Buffer, num_samples);
+			}
+		
 			return;
 		}
 

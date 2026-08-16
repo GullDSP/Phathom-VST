@@ -211,8 +211,8 @@ public:
 	Steinberg::tresult getState(Steinberg::IBStreamer& streamer)
 	{
 		// Write version num
-
-		if (!streamer.writeInt32(200)) {
+		int version_now = 200;
+		if (!streamer.writeInt32(version_now)) {
 			return Steinberg::kResultFalse;
 		}
 
