@@ -1,5 +1,5 @@
 <h1><strong>Phathom</strong></h1>
-<p>Phathom is a bass preamp plugin targeted towards modern fuzzy / growly bass guitar tones. Featuring dynamic transformer and CMOS-like saturation algorithms, and pre-distortion bass and treble filters to change how it reacts to picking dynamics and input timbre. </p>
+<p>Phathom is a bass preamp plugin targeted towards modern fuzzy / growly bass guitar tones. Featuring dynamic transformer and CMOS-style saturation algorithms, and pre-distortion bass and treble filters to change how they react to picking dynamics and input timbre. </p>
 
 <img width="745" height="533" alt="image" src="https://github.com/user-attachments/assets/7e43f065-81ca-4ba9-83ff-87a33be34399" />
 
