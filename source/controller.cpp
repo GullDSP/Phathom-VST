@@ -74,6 +74,9 @@ tresult PLUGIN_API PhathomController::setComponentState (IBStream* state)
 		setParamNormalized(id, value);
 	}
 
+	if (version < 200) {
+		setParamNormalized(kNonLinType, 1.0);
+	}
 
 	return kResultOk;
 }

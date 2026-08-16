@@ -26,7 +26,7 @@ enum PhathomParamID {
 	kOutLevel,
 	kDryEq,
 	kPhaseFlip,
-
+	kNonLinType,
 	kLastParam
 
 };
@@ -40,6 +40,13 @@ inline std::vector<Steinberg::Vst::Parameter*> registerParameters(Steinberg::Vst
 	int flagsUIParams = Steinberg::Vst::ParameterInfo::kIsHidden | Steinberg::Vst::ParameterInfo::kIsReadOnly;
 
 	myParams.push_back(new Steinberg::Vst::Parameter(STR16("Bypass"), kBypass, STR16(""),0,1, Steinberg::Vst::ParameterInfo::kIsBypass | Steinberg::Vst::ParameterInfo::kCanAutomate));
+
+	Steinberg::Vst::StringListParameter* pDistSwitchParam =
+		new Steinberg::Vst::StringListParameter(STR16("Dist Type"), kNonLinType, STR16(""), flagsSwitchedParams);
+	pDistSwitchParam->appendString(STR16("Clank"));
+	pDistSwitchParam->appendString(STR16("Fuzz"));
+	pDistSwitchParam->setNormalized(0);
+	myParams.push_back(pDistSwitchParam);
 
 	myParams.push_back(new Steinberg::Vst::Parameter(STR16("Mix"), kMix, STR16(""), 0.5, 0, flagsNormalParams));
 	myParams.push_back(new Steinberg::Vst::Parameter(STR16("Input Gain"), kInGain, STR16(""), 0.5, 0, flagsNormalParams));
@@ -204,7 +211,8 @@ public:
 	Steinberg::tresult getState(Steinberg::IBStreamer& streamer)
 	{
 		// Write version num
-		if (!streamer.writeInt32(100)) {
+
+		if (!streamer.writeInt32(200)) {
 			return Steinberg::kResultFalse;
 		}
 
@@ -245,6 +253,11 @@ public:
 				return Steinberg::kResultFalse;
 			}
 			setParameter(id, value);
+		}
+
+		if (version < 200) {
+			// If old preset, load using classic fuzz
+			setParameter(kNonLinType, 1.0);
 		}
 
 		setAllDirty();

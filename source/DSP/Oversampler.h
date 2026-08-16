@@ -64,7 +64,7 @@ public:
 		}
 
 		Nonlinearity.setSampleRate(currentSampleRate, currentBlockSize);
-
+		HystLoop.setSampleRate(sample_rate);
 		ReconstructionLPA.setSampleRate(currentSampleRate);
 		InterpolationLPA.setSampleRate(currentSampleRate);
 		ReconstructionLPB.setSampleRate(currentSampleRate);
@@ -85,6 +85,8 @@ public:
 
 		UpsampledBuffer.assign(currentBlockSize, 0.0);
 
+		
+
 	}
 	void prepareToPlay() {
 		Nonlinearity.prepareToPlay();
@@ -99,21 +101,35 @@ public:
 		InterpolationLPC.reset();
 		ReconstructionLPD.reset();
 		InterpolationLPD.reset();
+
 	}
 	void reset() {
 		resetDSP();
+		HystLoop.reset();
 		Nonlinearity.reset();
 	}
 	void collapseSmoothers() {
 		Nonlinearity.collapseSmoothers();
+		HystLoop.collapseSmoother();
 	}
 	void setDrive(float value) {
 		Nonlinearity.setDrive(value);
+		HystLoop.setDrive(value);
 	}
 	void setResponse(float value) {
 		Nonlinearity.setResponse(value);
 	}
-	
+	void setNonlinType(float value) {
+
+		if (value < 0.5) {
+			mUseHysLoop = true;
+
+		}
+		else {
+			mUseHysLoop = false;
+		}
+
+	}
 	void getBlockOversampled(float* Buffer, int num_samples) {
 
 		int factor = OVERSAMPLE_FACTOR;
@@ -143,7 +159,13 @@ public:
 		InterpolationLPC.getBlock(UpsampledBuffer.data(), UpsampledBuffer.data(), num_oversampled);
 		InterpolationLPD.getBlock(UpsampledBuffer.data(), UpsampledBuffer.data(), num_oversampled);
 		// Operation
-		Nonlinearity.getBlock(UpsampledBuffer.data(), num_oversampled);
+		if (!mUseHysLoop) {
+			Nonlinearity.getBlock(UpsampledBuffer.data(), num_oversampled);
+
+		}
+		else {
+			HystLoop.getBlock(UpsampledBuffer.data(), UpsampledBuffer.data(), num_oversampled);
+		}
 
 		ReconstructionLPA.getBlock(UpsampledBuffer.data(), UpsampledBuffer.data(), num_oversampled);
 		ReconstructionLPB.getBlock(UpsampledBuffer.data(), UpsampledBuffer.data(), num_oversampled);
@@ -173,10 +195,11 @@ private:
 	BiquadFilter InterpolationLPD{ BiquadFilter::PassFilterType::kLowpass };
 
 	StatefulNonlinearity Nonlinearity;
+	HysLoop HystLoop;
 
 	int OVERSAMPLE_FACTOR = 1;
 	float RECONSTRUCTION_HZ = 18000.0f;
 	float INTERPOLATION_HZ = 18000.0f;
 
-
+	bool mUseHysLoop = false;
 };

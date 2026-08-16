@@ -276,7 +276,11 @@ public:
 			}
 			
 		}
+		if (pParams->isParamDirty(kNonLinType)) {
+			mDistType = pParams->getParamValue(kNonLinType);
+			Nonlinearity.setNonlinType(mDistType);
 
+		}
 	}
 	/// <summary>
 	/// Reset LFO phases, and collapse smoothers
@@ -342,7 +346,7 @@ private:
 	float mMix = 0.5;
 	bool mDoDryEq = false;
 	bool mInvertPhase = false;
-
+	float mDistType = 0.0f;
 
 	HiFreqSelectorValues mHiCut = HiFreqSelectorValues::kHiNormal;
 	LoFreqSelectorValues mLoCut = LoFreqSelectorValues::kLoNormal;

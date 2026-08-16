@@ -16,6 +16,10 @@ public:
 		std::vector<double> zoomFactors = { 0.5,1,1.5,2,3,4,8 };
 		VST3Editor::setAllowedZoomFactors(zoomFactors);
 
+		if (frame) {
+			frame->invalid();
+		}
+
 	}
 
 

@@ -146,3 +146,74 @@ private:
 
 
 };
+
+class HysLoop {
+public:
+	void setSampleRate(int sample_rate) {
+		sample_rate_ = sample_rate;
+		LP1.setSampleRate(sample_rate);
+		LP2.setSampleRate(sample_rate);
+		LP3.setSampleRate(sample_rate);
+		LP1.setCenterHz(5000);
+		LP2.setCenterHz(5000);
+		LP3.setCenterHz(5000);
+		DC.setSampleRate(sample_rate);
+		DC.setCenterHz(10);
+		DriveSmoother.setSmoothTime(55, sample_rate);
+		setDrive(0.5);
+
+		rate_scale = 48000.0f / (float)sample_rate_;
+		if (rate_scale < 0.2) { rate_scale = 0.2f; }
+	}
+	void setDrive(float value) {
+		mA = 0.15f - (value * 0.14f);
+
+	}
+	void getBlock(float* out, float* in, int num_samples) {
+		for (int i = 0; i < num_samples; i++) {
+			out[i] = getNext(in[i]);
+		}
+	}
+	float lang(float x, float v) {
+		if (fabsf(x) < 0.01f) {
+			return x / (3.0 * v);
+		}
+		return (1.0 / tanh(x / v)) - (v / x);
+	}
+	float getNext(float in) {
+
+		float mA_now = DriveSmoother.getSmoothedValue(mA);
+
+		float d = in - ZX;
+		d = LP1.getNext(d);
+		d = LP2.getNext(d); // smooth out the delta a bit
+		float spl = lang(in + (mK * d * 5000.0f), mA_now);
+		spl = LP3.getNext(spl);
+		ZX = in;
+
+		spl = DC.getNext(spl);
+		return spl * 0.25f;
+	}
+	void reset() {
+		LP1.resetState();
+		LP2.resetState();
+		LP3.resetState();
+		ZX = 0.0f;
+		DC.resetState();
+
+	}
+
+	void collapseSmoother() {
+		DriveSmoother.collapseTo(mA);
+	}
+private:
+	int sample_rate_ = 48000;
+	float ZX = 0;
+	float rate_scale = 1.0f; // Scale the 'width' based on sample rate to keep it roughly consistent
+	float mK = 1;
+	float mA = 1;
+	OnePoleLowpass LP1, LP2, LP3;
+	OnePoleHighpass DC;
+	ValueSmoother DriveSmoother;
+};
+
