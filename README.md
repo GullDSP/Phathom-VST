@@ -12,6 +12,9 @@ https://github.com/GullDSP/Phathom-VST/releases
 </a>
 
 Demo bass guitar played by Rich Gray @annihilatorbass on [Fiverr](https://www.fiverr.com/annihilatorbass)
+
+<h3>Declaration</h3>
+This project contains no AI / LLM generated code. Any boilerplate comments, or code not written by me, is from the VST SDK framework.
 <h3>Features</h3>
 <ul>
 <li>Hysteretic stateful saturation. Instead of a static waveshaper, the distortions here react to a combination of current and past input levels and frequencies, similar to a tape, transformer or modern CMOS pedal. This gives the distortion an organic element, it reacts to playing style, dynamics and timbre.
