@@ -7,8 +7,8 @@
 <h3>Download</h3>
 https://github.com/GullDSP/Phathom-VST/releases
 <h3>Demo</h3>
-<a href="https://www.youtube.com/watch?v=Skig5GgicCw">
-  <img src="https://markdown-videos-api.jorgenkh.no/url?url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DSkig5GgicCw" alt="Phathom Demo" title="Phathom Demo"/>
+<a href="https://www.youtube.com/watch?v=S1kcLkOGD1U">
+  <img src="https://markdown-videos-api.jorgenkh.no/url?url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DS1kcLkOGD1U" alt="Phathom Demo" title="Phathom Demo"/>
 </a>
 
 Demo bass guitar played by Rich Gray @annihilatorbass on [Fiverr](https://www.fiverr.com/annihilatorbass)
